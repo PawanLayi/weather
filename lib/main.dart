@@ -4,7 +4,6 @@ import 'package:weather/weather.dart';
 
 void main() {
 
-
   runApp(MyApp());
 }
 
@@ -17,6 +16,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Weather App',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -51,20 +51,13 @@ class WeatherProvider with ChangeNotifier {
 
   }
   Future<void> fetchWeather(String cityName,context) async {
-
     try {
       _weather = await _weatherService.fetchWeather(cityName);
       notifyListeners();
-
-
     } catch (e) {
       // Show toast notification with the error message
       dataFound(context);
     }
-
-
-
-
   }
 }
 
@@ -76,13 +69,12 @@ class WeatherScreen extends StatefulWidget {
 class _WeatherScreenState extends State<WeatherScreen> {
   final TextEditingController _cityController = TextEditingController();
 
-
   List<Widget>  locationTempImage(double temp){
     List<Widget> imageUi=[];
     if(temp>35.00){
       imageUi.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
+        child: SizedBox(
             height : MediaQuery.of(context).size.height*.2,
             width: MediaQuery.of(context).size.width*.40,
             child: Image.asset("assets/max-temp.png",fit: BoxFit.fitWidth)),
@@ -91,7 +83,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     else if(temp<30.00){
       imageUi.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
+        child: SizedBox(
             height : MediaQuery.of(context).size.height*.2,
             width: MediaQuery.of(context).size.width*.40,
             child: Image.asset("assets/lightrain.png",fit: BoxFit.fitWidth)),
@@ -100,7 +92,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     else if(temp<20.00){
       imageUi.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
+        child: SizedBox(
             height : MediaQuery.of(context).size.height*.2,
             width: MediaQuery.of(context).size.width*.40,
             child: Image.asset("assets/heavyrain.png",fit: BoxFit.fitWidth)),
@@ -109,7 +101,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     else{
       imageUi.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
+        child: SizedBox(
             height : MediaQuery.of(context).size.height*.2,
             width: MediaQuery.of(context).size.width*.40,
             child: Image.asset("assets/heavycloud.png",fit: BoxFit.fitWidth)),
@@ -127,67 +119,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Weather App'),
+        title: const Text('Weather App'),
       ),
-      body:/* Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _cityController,
-              decoration: InputDecoration(
-                labelText: 'Enter City Name',
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                weatherProvider.fetchWeather(_cityController.text,context);
-              },
-              child: Text('Get Weather'),
-            ),
-            SizedBox(height: 20),
-            weather == null ? Text('Enter a city name to get the weather')
-                : Column(
-              children: [
-                Text(
-                  'City: ${weather.areaName}',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  'Temperature: ${weather.temperature?.celsius?.toStringAsFixed(1)}°C',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  'Description: ${weather.weatherDescription}',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  'Min: ${weather.tempMin?.celsius?.toStringAsFixed(1)}°C',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'Max: ${weather.tempMax?.celsius?.toStringAsFixed(1)}°C',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'Wind Speed: ${weather.windSpeed} m/s',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'Humidity: ${weather.humidity}%',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-
-
-          ],
-        ),
-      )*/
+      body:
       SingleChildScrollView(
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -198,7 +133,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      height:     MediaQuery.of(context).size.height*.23,
+                      height: MediaQuery.of(context).size.height*.23,
                       width: MediaQuery.of(context).size.width*.99,
                       decoration: const BoxDecoration(
                           color: Colors.white,
@@ -207,8 +142,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             topLeft: Radius.circular(50),
                           )),
                       child:Container(
-                        // width: size.width * .99,
-
                         decoration: BoxDecoration(
                             gradient: const LinearGradient(
                                 begin: Alignment.topLeft,
@@ -227,23 +160,21 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               ),
                             ]),
                         child: Container(
-                          // width: size.width * .9,
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                             children: [
                               weather == null ? Text('Add city',style: TextStyle(
                                   fontSize: 30.0,
                                   fontWeight: FontWeight.bold,
-                                  foreground: Paint()..shader = LinearGradient(
+                                  foreground: Paint()..shader = const LinearGradient(
                                     colors: <Color>[
                                       Colors.pinkAccent,
                                       Colors.deepPurpleAccent,
                                       Colors.red
                                       //add more color here.
                                     ],
-                                  ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))
+                                  ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))
                               ))
                                   :   SizedBox(
                                 width: MediaQuery.of(context).size.width*.40,
@@ -263,12 +194,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                               Colors.red
                                               //add more color here.
                                             ],
-                                          ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))
+                                          ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))
                                       )),
                                     ),
                                     Text(
                                       ' T ${weather?.temperature?.celsius?.toStringAsFixed(1)}°C',
-                                      style: TextStyle(fontSize: 24),
+                                      style: const TextStyle(fontSize: 24),
                                     ),
 
                                   ],
@@ -280,7 +211,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               ):
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Container(
+                                child: SizedBox(
                                     height : MediaQuery.of(context).size.height*.2,
                                     width: MediaQuery.of(context).size.width*.40,
                                     child: Image.asset("assets/heavycloud.png",fit: BoxFit.fitWidth)),
@@ -304,9 +235,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           )),
                       child:Container(
                         width: size.width * .7,
-
                         decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.center,
                                 colors: [
@@ -334,7 +264,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               children: [
                                 weatherItem(
                                   text: 'Wind Speed',
-                                  value:     "${weather != null ?weather?.windSpeed:""} m/s",
+                                  value: "${weather != null ?weather?.windSpeed:""} m/s",
                                   unit: 'km/h',
                                   imageUrl: 'assets/windspeed.png',
                                 ),
@@ -360,9 +290,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 ],
               ),
             ),
-
-
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
@@ -391,9 +318,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                FocusScope.of(context).unfocus();
                 weatherProvider.fetchWeather(_cityController.text,context);
               },
-              child: Text('Get Weather'),
+              child: const Text('Get Weather'),
             ),
           ],
         ),
@@ -401,6 +329,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     );
   }
 }
+
 class weatherItem extends StatelessWidget {
   const weatherItem({
     Key? key,

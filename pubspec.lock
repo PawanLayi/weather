@@ -148,7 +148,7 @@ packages:
     source: hosted
     version: "1.8.3"
   provider:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: provider
       sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c
@@ -225,7 +225,7 @@ packages:
     source: hosted
     version: "2.1.4"
   weather:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: weather
       sha256: "5ad1d5b77051aa524049fc0abf1076ac4533e91e0176b0a4bab1182a2d6f921b"
